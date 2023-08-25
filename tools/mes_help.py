@@ -8,7 +8,7 @@ from .message import *
 @dp.message_handler(content_types=["new_chat_members"])
 async def new_member(message: types.Message):
     neme = message.new_chat_members[0].first_name
-    chat_id = '-1001919822446'
+    chat_id = config['Chat']['chat_id']
     await bot.send_photo(chat_id, res_data1[8],
             "❗️ ПРОЧТИ ЭТО ВАЖНО⚠️\n\n"
             "❌️Если у вас открыт STEAM,\n то закройте его ПОЛНОСТЬЮ и откройте заново.\n\n"
@@ -171,6 +171,3 @@ async def Menu3(call):
     await asyncio.sleep(10)
     await message.delete()
 
-
-
-# https://t.me/+aNAJIq4ZhWZiYjQy

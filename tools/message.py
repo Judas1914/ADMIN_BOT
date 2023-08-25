@@ -35,7 +35,7 @@ for file in file_list2:
 
 @dp.message_handler(commands='start')
 async def start(message: types.Message):
-    if str(message.chat.id) != '-1001919822446':
+    if str(message.chat.id) != config['Chat']['chat_id']:
         await bot.send_photo(
             message.chat.id, res_data1[0],
             "🇷🇺️ Уважаемый {0.first_name} ❗\n"
@@ -48,8 +48,8 @@ async def start(message: types.Message):
             "Click the START button on the bottom 👇️ and we will begin\n"
             .format(message.from_user), reply_markup=keyboard1)
 
-    elif str(message.chat.id) == '-1001919822446':
-        chat_id = '-1001919822446'
+    elif str(message.chat.id) == config['Chat']['chat_id']:
+        chat_id = config['Chat']['chat_id']
         await bot.send_photo(
             chat_id, res_data2[9],
             "{0.first_name},не нужно здесь писать, здесь всё уже продумали за вас.\n\n"
@@ -203,7 +203,7 @@ async def okkey(call):
 
 @dp.message_handler(content_types='text')
 async def start(message: types.Message):
-    if message.text.lower() == 'меню' and str(message.chat.id) != '-1001919822446':
+    if message.text.lower() == 'меню' and str(message.chat.id) != config['Chat']['chat_id']:
         await bot.send_photo(
             message.chat.id, res_data2[0],
             "Сейчас ответим на все твои вопросы❗️\n\n"
@@ -211,8 +211,8 @@ async def start(message: types.Message):
             .format(message.from_user), reply_markup=Help)
         await bot.delete_message(message.chat.id, message.message_id)
 
-    elif str(message.chat.id) == '-1001919822446':
-        chat_id = '-1001919822446'
+    elif str(message.chat.id) == config['Chat']['chat_id']:
+        chat_id = config['Chat']['chat_id']
         await bot.send_photo(
             chat_id, res_data2[9],
             "{0.first_name},не нужно здесь писать, здесь всё уже продумали за вас.\n\n"
