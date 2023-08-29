@@ -105,9 +105,9 @@ async def mail_handler(message: types.Message, state: FSMContext):
 async def game_handler(message: types.Message, state: FSMContext):
     game = message.text
     await bot.send_photo(message.chat.id, res_data1[3],
-                   "🇷🇺️Выберите площадку на которой приобретали ИГРУ👇️\n"
-                   "---------------------------------\n"
-                   "🇬🇧️Select the site where you purchased the GAME👇️\n", reply_markup=sell)
+                    "🇷🇺️Выберите площадку на которой приобретали ИГРУ👇️\n"
+                    "---------------------------------\n"
+                    "🇬🇧️Select the site where you purchased the GAME👇️\n", reply_markup=sell)
     await state.finish()
 
 
@@ -226,7 +226,6 @@ async def start(message: types.Message):
         await bot.delete_message(chat_id, message.message_id + 1)
 
         await bot.restrict_chat_member(message.chat.id, message.from_id, types.ChatPermissions(False), until_date = 10)
-
 
 
     else:

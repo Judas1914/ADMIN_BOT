@@ -1,5 +1,6 @@
 from aiogram.types import InlineKeyboardButton
 from aiogram import Bot, Dispatcher, types
+from settings import *
 
 
 keyboard1 = types.InlineKeyboardMarkup()
@@ -34,7 +35,7 @@ okk_bt3 = types.InlineKeyboardButton(text="Согласен/Agree", callback_dat
 okk3.add(okk_bt3)
 
 go = types.InlineKeyboardMarkup()
-go_bt = types.InlineKeyboardButton(text="Перейти/Start", url="https://t.me/+aNAJIq4ZhWZiYjQy")
+go_bt = types.InlineKeyboardButton(text="Перейти/Start", url=config['url']['StGw'])
 go.add(go_bt)
 
 ###################################################################
@@ -48,7 +49,7 @@ button5 = types.InlineKeyboardButton(text="5️⃣Нет игры на Акка�
 button6 = types.InlineKeyboardButton(text="6️⃣Кто-то еще заходит в мой аккаунт", callback_data="H.6")
 button7 = types.InlineKeyboardButton(text="7️⃣Family Library Sharing", callback_data="H.7")
 button8 = types.InlineKeyboardButton(text="8️⃣Не нашли нужного", callback_data="H.8")
-button9 = types.InlineKeyboardButton(text='❗️Вернуться в "Steam Guard"❗️' , url="https://t.me/+aNAJIq4ZhWZiYjQy")
+button9 = types.InlineKeyboardButton(text='❗️Вернуться в "Steam Guard"❗️' , url=config['url']['StGw'])
 Help.add(button1)
 Help.add(button2)
 Help.add(button3)
@@ -60,7 +61,7 @@ Help.add(button8)
 Help.add(button9)
 
 Suport = types.InlineKeyboardMarkup()
-Sup = types.InlineKeyboardButton(text="🤙ПОДДЕРЖКА", url="https://t.me/Suport_GK_bot")
+Sup = types.InlineKeyboardButton(text="🤙ПОДДЕРЖКА", url=config['url']['Supp'])
 Back = types.InlineKeyboardButton(text="↩️НАЗАД В МЕНЮ", callback_data="SUP.hi")
 Suport.add(Sup)
 Suport.add(Back)
@@ -86,7 +87,7 @@ Suport_back = types.InlineKeyboardMarkup()
 button1 = types.InlineKeyboardButton(text="Не приходит Steam Guard", callback_data="F.1")
 button2 = types.InlineKeyboardButton(text="Слишком много попыток", callback_data="F.2")
 button3 = types.InlineKeyboardButton(text="Ошибка", callback_data="F.3")
-button4 = types.InlineKeyboardButton(text="Помощь", url="https://t.me/A4d3m1t_bot")
+button4 = types.InlineKeyboardButton(text="Помощь", url=config['url']['ADmB'])
 Suport_back.add(button1)
 Suport_back.add(button2)
 Suport_back.add(button3, button4)
