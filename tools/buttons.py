@@ -8,10 +8,10 @@ start_button = types.InlineKeyboardButton(text="Начать/Start", callback_da
 keyboard1.add(start_button)
 
 sell = types.InlineKeyboardMarkup()
-button1 = types.InlineKeyboardButton(text="Plati.Market", callback_data="mr.PM")
-button2 = types.InlineKeyboardButton(text="GGSel.net", callback_data="mr.GGS")
-button3 = types.InlineKeyboardButton(text="WMCentre.net", callback_data="mr.WMC")
-button4 = types.InlineKeyboardButton(text="Другое/Another", callback_data="mr.GGS")
+button1 = types.InlineKeyboardButton(text="Plati.Market", callback_data="mr.PlatiMarket")
+button2 = types.InlineKeyboardButton(text="GGSel.net", callback_data="mr.GGSelnet")
+button3 = types.InlineKeyboardButton(text="WMCentre.net", callback_data="mr.WMCentrenet")
+button4 = types.InlineKeyboardButton(text="Другое/Another", callback_data="mr.Another")
 sell.add(button1, button2, button3, button4)
 
 lang = types.InlineKeyboardMarkup()
