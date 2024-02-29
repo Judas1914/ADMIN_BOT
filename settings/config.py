@@ -34,7 +34,7 @@ def check_n_load_json(json_file_path):
     Проверяет указанный путь на наличие файла и выгружает данные если они есть
     """
     if os.path.exists():
-        with open(json_file_path, 'r', encoding='utf-8') as fl:     
+        with open(json_file_path, 'r', encoding='utf-8') as fl:
             json_data = json.load(fl)
     else:
         json_data = {}
