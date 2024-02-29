@@ -17,6 +17,8 @@ import asyncio
 import re
 import configparser
 import time
+import json
+import os
 
 settings_file = "settings"
 config = configparser.ConfigParser()
@@ -26,3 +28,25 @@ def config_update():
     with open(settings_file, 'w') as fl:
         config.write(fl)
     config.read(settings_file)
+
+def check_n_load_json(json_file_path):
+    """
+    Проверяет указанный путь на наличие файла и выгружает данные если они есть
+    """
+    if os.path.exists():
+        with open(json_file_path, 'r', encoding='utf-8') as fl:     
+            json_data = json.load(fl)
+    else:
+        json_data = {}
+    return json_data
+
+
+###################
+
+API_TOKEN = config['Telegram_Admin']['token']
+bot = Bot(token=API_TOKEN)
+
+# For example use simple MemoryStorage for Dispatcher.
+storage = MemoryStorage()
+dp = Dispatcher(bot, storage=storage)
+

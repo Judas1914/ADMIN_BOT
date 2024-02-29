@@ -2,17 +2,7 @@ from settings import *
 from .buttons import *
 from .correct_mail import *
 from .States import *
-
-
-API_TOKEN = config['Telegram_Admin']['token']
-bot = Bot(token=API_TOKEN)
-
-# For example use simple MemoryStorage for Dispatcher.
-storage = MemoryStorage()
-dp = Dispatcher(bot, storage=storage)
-
-# user_inf
-user_data = []
+from models.users import User
 
 # Jpg
 file_list1 = ['data/1.jpg', 'data/2.jpg', 'data/3.jpg',
@@ -39,10 +29,9 @@ for file in file_list2:
 @dp.message_handler(commands='start')
 async def start(message: types.Message):
     if str(message.chat.id) != config['Chat']['chat_id']:
-
-        user_data.append(str(message.chat.id))            # user id
-        user_data.append(str(message.chat.first_name))    # user firs_name
-        user_data.append(str(message.chat.username))      # user name
+        id = str(message.chat.id)
+        message.bot.user_data[id] = User(id, message.chat.username, message.chat.first_name) # Создание модели пользователя и  
+        
 
         await bot.send_photo(
             message.chat.id, res_data1[0],
@@ -73,6 +62,7 @@ async def start(message: types.Message):
 
 @dp.callback_query_handler(lambda call: call.data == 'st.start')
 async def mail_entry(call: types.CallbackQuery):
+
     await call.message.answer_photo(
         res_data1[1],
         "🇷🇺️ Напишите ПОЧТУ с которой вы покупали\n"
@@ -89,10 +79,12 @@ async def mail_entry(call: types.CallbackQuery):
 @dp.message_handler(state=Form.mail)
 async def mail_handler(message: types.Message, state: FSMContext):
     email = message.text
+    
+
 
     if is_valid_email(email):
-
-        user_data.append(str(email)) # user mail
+        id = str(message.chat.id)
+        message.bot.user_data[id].mail = email
 
         async with state.proxy() as data:
             data['mail'] = message.text
@@ -116,7 +108,8 @@ async def mail_handler(message: types.Message, state: FSMContext):
 async def game_handler(message: types.Message, state: FSMContext):
     game = message.text
 
-    user_data.append(str(game)) # user game
+    id = str(message.chat.id)
+    message.bot.user_data[id].game_name = game
 
     await bot.send_photo(message.chat.id, res_data1[3],
                     "🇷🇺️Выберите площадку на которой приобретали ИГРУ👇️\n"
@@ -126,20 +119,22 @@ async def game_handler(message: types.Message, state: FSMContext):
 
 
 @dp.callback_query_handler(text_contains='mr.')
-async def Shops(call):
+async def Shops(call: types.CallbackQuery):
 
-    user_data.append(str(call.data)) # user market
+    id = str(call.message.chat.id)
+    call.bot.user_data[id].market_name = str(call.data) # user market
 
-    inf = ";".join(user_data)
+    data_filname = "settings/user_data.json"
+    json_data = check_n_load_json(data_filname)
 
-    with open("settings/user_data.txt", "a", encoding='utf-8') as file:
-        for  line in user_data:
-            file.write(line + ';')
-        file.write("\n")
+    # Cохранение в JSON
+    with open(data_filname, "a", encoding='utf-8') as file:
+        # Добавление пользователя в БД
+        json_data.update(call.bot.user_data[id].to_dict())
+        # Запись в файд
+        json.dump(json_data, file, indent=4, ensure_ascii=False)
 
-        await bot.send_message(config['meid']['id'], inf)
-
-        user_data.clear()
+        await bot.send_message(config['meid']['id'], call.bot.user_data[id].to_str())
 
 
     await bot.send_photo(call.message.chat.id, res_data1[4],
