@@ -2,15 +2,7 @@ import logging
 from tools import *
 from settings import *
 
-bot.user_data = {
-    0: {
-        'username': '',
-        'first_name': '',
-        'mail': '',
-        'games': [],
-        'market_name': ''
-    }
-} # Данные пользователей
+bot.user_data = check_n_load_json(BASE_JSON_FILEPATH)
 
 logging.basicConfig(level=logging.INFO)
 

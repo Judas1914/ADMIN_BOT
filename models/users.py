@@ -7,7 +7,7 @@ class User:
         self.mail = ''
         self.game_name = ''
         self.market_name = ''
-    
+
     def to_dict(self):
         return {
             f'{self.id}': {
@@ -18,7 +18,6 @@ class User:
                 'market_name': self.market_name
            }
         }
-    
+
     def to_str(self):
         return f'[{self.id}] {self.username}({self.first_name}) | {self.mail} | {self.game_name} | {self.market_name}'
-    

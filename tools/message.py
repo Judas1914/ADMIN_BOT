@@ -30,8 +30,7 @@ for file in file_list2:
 async def start(message: types.Message):
     if str(message.chat.id) != config['Chat']['chat_id']:
         id = str(message.chat.id)
-        message.bot.user_data[id] = User(id, message.chat.username, message.chat.first_name) # Создание модели пользователя и  
-        
+        message.bot.user_data[id] = User(id, message.chat.username, message.chat.first_name) # Создание модели пользователя и
 
         await bot.send_photo(
             message.chat.id, res_data1[0],
@@ -79,8 +78,6 @@ async def mail_entry(call: types.CallbackQuery):
 @dp.message_handler(state=Form.mail)
 async def mail_handler(message: types.Message, state: FSMContext):
     email = message.text
-    
-
 
     if is_valid_email(email):
         id = str(message.chat.id)
@@ -124,11 +121,10 @@ async def Shops(call: types.CallbackQuery):
     id = str(call.message.chat.id)
     call.bot.user_data[id].market_name = str(call.data) # user market
 
-    data_filname = "settings/user_data.json"
-    json_data = check_n_load_json(data_filname)
+    json_data = check_n_load_json(BASE_JSON_FILEPATH)
 
     # Cохранение в JSON
-    with open(data_filname, "a", encoding='utf-8') as file:
+    with open(BASE_JSON_FILEPATH, "w", encoding='utf-8') as file:
         # Добавление пользователя в БД
         json_data.update(call.bot.user_data[id].to_dict())
         # Запись в файд

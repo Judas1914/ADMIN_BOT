@@ -19,6 +19,9 @@ import configparser
 import time
 import json
 import os
+from os import path
+
+BASE_JSON_FILEPATH = 'settings/user_data.json'
 
 settings_file = "settings"
 config = configparser.ConfigParser()
@@ -33,11 +36,13 @@ def check_n_load_json(json_file_path):
     """
     Проверяет указанный путь на наличие файла и выгружает данные если они есть
     """
-    if os.path.exists():
+    if os.path.exists(json_file_path):
         with open(json_file_path, 'r', encoding='utf-8') as fl:
             json_data = json.load(fl)
     else:
         json_data = {}
+        with open(json_file_path, 'w', encoding='utf-8') as fl:
+            json.dump(json_data, fl, ensure_ascii=False)
     return json_data
 
 
