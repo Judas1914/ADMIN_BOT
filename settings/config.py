@@ -10,6 +10,7 @@ from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.types import ParseMode
 from aiogram.utils import executor
+
 import asyncio
 
 # Стандарт
@@ -19,9 +20,6 @@ import time
 import json
 import os
 from os import path
-
-# Конвентор в CVS
-import pandas as pd
 
 BASE_JSON_FILEPATH = 'settings/user_data.json'
 

@@ -249,11 +249,8 @@ async def start(message: types.Message):
 
     elif message.text == "/all_inf":
         if str(message.chat.id) == str(config['meid']['id']):
-            with open("settings/user_data.json", "rb") as fileJson:
-                df = pd.read_json(fileJson)
-                df.to_csv(r"settings\user_data.csv", index=False)
-                with open("settings/user_data.csv", "rb") as fileCSV:
-                    await bot.send_document(config['meid']['id'], fileCSV)
+            with open("settings/user_data.json", "rb") as file:
+                await bot.send_document(config['meid']['id'], document=file)
 
         else:
             await bot.send_message(
