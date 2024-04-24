@@ -21,6 +21,9 @@ import json
 import os
 from os import path
 
+# Конвентор в CVS
+import pandas as pd
+
 BASE_JSON_FILEPATH = 'settings/user_data.json'
 
 settings_file = "settings"
