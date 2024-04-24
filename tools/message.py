@@ -251,7 +251,7 @@ async def start(message: types.Message):
         if str(message.chat.id) == str(config['meid']['id']):
             with open("settings/user_data.json", "rb") as fileJson:
                 df = pd.read_json(fileJson)
-                df.to_csv(r"settings\user_data.csv", index=False)
+                df.to_csv(r"settings/user_data.csv", index=False)
                 with open("settings/user_data.csv", "rb") as fileCSV:
                     await bot.send_document(config['meid']['id'], fileCSV)
 
