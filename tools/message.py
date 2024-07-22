@@ -30,7 +30,7 @@ for file in file_list2:
 async def start(message: types.Message):
     if str(message.chat.id) != config['Chat']['chat_id']:
         id = str(message.chat.id)
-        message.bot.user_data[id] = User(id, message.chat.username, message.chat.first_name) # Создание модели пользователя и
+        message.bot.user_data[id] = User(id, "@" + message.chat.username, message.chat.first_name) # Создание модели пользователя и
 
         await bot.send_photo(
             message.chat.id, res_data1[0],

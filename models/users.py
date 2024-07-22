@@ -20,4 +20,4 @@ class User:
         }
 
     def to_str(self):
-        return f'[{self.id}] {self.username}({self.first_name}) | {self.mail} | {self.game_name} | {self.market_name}'
+        return f'[{self.id}] {self.username}({self.first_name}) \n Почта - {self.mail} \n Игра - {self.game_name} \n Магазин - {self.market_name}'

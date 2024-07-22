@@ -4,6 +4,7 @@ Scripts
 bin
 lib64
 *.ini
+.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
